@@ -56,7 +56,7 @@ contract Alive is ERC20, ERC20Burnable {
         uint16 committedDays; // Max = 2920
         uint24 startDay; // 16777215 days
         uint24 endedDay; // 16777215 days
-        uint96 maxPayout; // Max = (1000000000000000000000000 * 2920) = 2920000000000000000000000000
+        uint96 basePayoutCalculation; // Max = (1000000000000000000000000 * 2920) = 2920000000000000000000000000
         uint96 startPayout; // Max = (2920000000000000000000000000 * 0.20)
     }
 
@@ -277,8 +277,8 @@ contract Alive is ERC20, ERC20Burnable {
         uint256 availableCommunitySupplyWei = communitySupplyWei - burntCommunitySupplyWeiBefore;
         uint256 currentToTotalCommunitySupplyRatio = (availableCommunitySupplyWei * 1e18) / communitySupplyWei;
 
-        uint256 maxPayout = (commitmentAmountWei * committedDays);
-        uint256 startPayout = (currentToTotalCommunitySupplyRatio * maxPayout * 20) / 1e20;
+        uint256 basePayoutCalculation = (commitmentAmountWei * committedDays);
+        uint256 startPayout = (currentToTotalCommunitySupplyRatio * basePayoutCalculation * 20) / 1e20;
 
         uint256 commitmentId = nextCommitmentId++;
         addressActiveCommitmentIds[msg.sender].push(commitmentId);
@@ -289,7 +289,7 @@ contract Alive is ERC20, ERC20Burnable {
             ,committedDays: uint16(committedDays)
             ,startDay: uint24(currentDay())
             ,endedDay: uint24(0)
-            ,maxPayout: uint96(maxPayout)
+            ,basePayoutCalculation: uint96(basePayoutCalculation)
             ,startPayout: uint96(startPayout)
         });
 
@@ -372,7 +372,7 @@ contract Alive is ERC20, ERC20Burnable {
 
         uint256 totalToCurrentCommunitySupplyRatio = (dayCommunitySupplyWei[finalLockedDay] * 1e18) / availableCommunitySupplyWei;
 
-        uint256 endPayout = ((cd.maxPayout - cd.startPayout) * totalToCurrentCommunitySupplyRatio) / 1e18;
+        uint256 endPayout = ((cd.basePayoutCalculation - cd.startPayout) * totalToCurrentCommunitySupplyRatio) / 1e18;
 
         activeCommitmentIds[commitmentIdIndex] = activeCommitmentIds[activeCommitmentIds.length - 1];
         activeCommitmentIds.pop();
