@@ -39,7 +39,7 @@ contract Alive is ERC20, ERC20Burnable {
 
     address public core_address = 0xe668d27636A844c61557F820F712560A27fEE835;
 
-    uint256 public contractSupplyWei;
+    uint256 public immutable contractSupplyWei;
     uint256 public coreSupplyWei; // core_address AXIS balance
 
     uint256 public communitySupplyWei; // Difference between contractSupplyWei and core_address balance
@@ -48,7 +48,7 @@ contract Alive is ERC20, ERC20Burnable {
     uint256 public latestCommunitySupplyDay = 0; // Tracking latest calculated & recorded community supply day
     uint256 public nextCommitmentId = 1; // Next Id to use for new commitment
 
-    uint256 public launch_time; 
+    uint256 public immutable launch_time;
 
     struct CommitmentDetails {
         address committerAddress;
