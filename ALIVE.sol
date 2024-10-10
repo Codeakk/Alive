@@ -1,9 +1,11 @@
-// Codeak
 pragma solidity ^0.8.4;
 
+// SPDX-License-Identifier: MIT
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
+// SPDX-License-Identifier: UNLICENSED
+// Codeak
 interface _AXIS {
     function totalSupply() external view returns (uint256);
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
